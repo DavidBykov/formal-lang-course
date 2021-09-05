@@ -9,11 +9,16 @@ def get_graph_description(graph: networkx.MultiDiGraph) -> (int, int, set):
     :type graph: networkx.MultiDiGraph
     """
 
-    return graph.number_of_nodes(), graph.number_of_edges(), cfpq_data.get_labels(graph, verbose=False)
+    return (
+        graph.number_of_nodes(),
+        graph.number_of_edges(),
+        cfpq_data.get_labels(graph, verbose=False),
+    )
 
 
-def write_two_cycles_graph(first_cycle_vertices: int, second_cycle_vertices, edge_labels: (str, str),
-                           path: str) -> None:
+def write_two_cycles_graph(
+    first_cycle_vertices: int, second_cycle_vertices, edge_labels: (str, str), path: str
+) -> None:
     """Creates and writes a graph of two loops along a given path
 
     :param first_cycle_vertices: The number of nodes in the first cycle without a common node
@@ -26,6 +31,10 @@ def write_two_cycles_graph(first_cycle_vertices: int, second_cycle_vertices, edg
     :type path: str
     """
 
-    two_cycles_graph = cfpq_data.labeled_two_cycles_graph(first_cycle_vertices, second_cycle_vertices,
-                                                          edge_labels=edge_labels, verbose=False)
+    two_cycles_graph = cfpq_data.labeled_two_cycles_graph(
+        first_cycle_vertices,
+        second_cycle_vertices,
+        edge_labels=edge_labels,
+        verbose=False,
+    )
     networkx.drawing.nx_pydot.write_dot(two_cycles_graph, path)
