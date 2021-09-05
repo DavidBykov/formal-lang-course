@@ -7,15 +7,13 @@ from project.graph_utils import get_graph_description, write_two_cycles_graph
 def test_get_graph_utils():
     graph_description = get_graph_description(
         cfpq_data.labeled_cycle_graph(10, edge_label="edge_label"))
-    print(graph_description)
     assert (10, 10, {"edge_label"}) == graph_description
 
 
 def test_two_cycles_graph():
     graph_description = get_graph_description(
         cfpq_data.labeled_two_cycles_graph(5, 5, edge_labels=("edge_label_one", "edge_label_two"), verbose=False))
-
-    assert (10, 11, {"edge_label_one, edge_label_two"}) == graph_description
+    assert (11, 12, {"edge_label_one", "edge_label_two"}) == graph_description
 
 
 def test_write_two_cycles_graph(tmpdir):
