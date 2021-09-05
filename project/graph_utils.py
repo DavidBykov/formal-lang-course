@@ -2,11 +2,11 @@ import cfpq_data
 import networkx
 
 
-def get_graph_description(graph: networkx.nx.MultiDiGraph) -> (int, int, set):
+def get_graph_description(graph: networkx.MultiDiGraph) -> (int, int, set):
     """Returns number of nodes, number of edges, set of labels
 
     :param graph: A directed graph class that can store multiedges
-    :type graph: networkx.nx.MultiDiGraph
+    :type graph: networkx.MultiDiGraph
     """
 
     return graph.number_of_nodes(), graph.number_of_edges(), cfpq_data.get_labels(graph, verbose=False)
@@ -28,4 +28,4 @@ def write_two_cycles_graph(first_cycle_vertices: int, second_cycle_vertices, edg
 
     two_cycles_graph = cfpq_data.labeled_two_cycles_graph(first_cycle_vertices, second_cycle_vertices,
                                                           edge_labels=edge_labels, verbose=False)
-    networkx.nx.drawing.nx_pydot.write_dot(two_cycles_graph, path)
+    networkx.drawing.nx_pydot.write_dot(two_cycles_graph, path)

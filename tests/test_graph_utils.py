@@ -5,13 +5,17 @@ from project.graph_utils import get_graph_description, write_two_cycles_graph
 
 
 def test_get_graph_utils():
-    assert (10, "edge_label", {"edge_label"}) == get_graph_description(
+    graph_description = get_graph_description(
         cfpq_data.labeled_cycle_graph(10, edge_label="edge_label"))
+    print(graph_description)
+    assert (10, 10, {"edge_label"}) == graph_description
 
 
 def test_two_cycles_graph():
-    assert (10, 11, {"edge_label_one, edge_label_two"}) == get_graph_description(
+    graph_description = get_graph_description(
         cfpq_data.labeled_two_cycles_graph(5, 5, edge_labels=("edge_label_one", "edge_label_two"), verbose=False))
+
+    assert (10, 11, {"edge_label_one, edge_label_two"}) == graph_description
 
 
 def test_write_two_cycles_graph(tmpdir):
@@ -25,7 +29,7 @@ def test_write_two_cycles_graph(tmpdir):
     expected_graph = cfpq_data.labeled_two_cycles_graph(n, m, edge_labels=edge_labels, verbose=False)
     unexpected_graph = cfpq_data.labeled_two_cycles_graph(n, m + 1, edge_labels=edge_labels, verbose=False)
 
-    actual_graph = networkx.nx.drawing.nx_pydot.read_dot(file)
+    actual_graph = networkx.drawing.nx_pydot.read_dot(file)
 
-    assert networkx.nx.is_isomorphic(expected_graph, actual_graph)
-    assert not networkx.nx.is_isomorphic(unexpected_graph, actual_graph)
+    assert networkx.is_isomorphic(expected_graph, actual_graph)
+    assert not networkx.is_isomorphic(unexpected_graph, actual_graph)
