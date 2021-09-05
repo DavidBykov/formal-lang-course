@@ -49,7 +49,7 @@ jobs:
       - name: Install pre-commit
         run: |
           pre-commit install
-    
+
       - name: Run pytest
         run: |
           python ./scripts/run_tests.py
