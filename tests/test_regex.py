@@ -12,7 +12,7 @@ from pyformlang.regular_expression import MisformedRegexError
 
 
 def test_regex_to_dfa():
-    regex = "1 1 (1 0)*"
+    regex = "(1 0) | (1 1) | (0 1) | (0 1 0 1)*"
     dfa = regex_to_min_dfa(regex)
     assert dfa.is_deterministic()
 
