@@ -41,48 +41,34 @@ def test_get_min_dfa():
     assert len(actual_dfa.states) == len(expected_dfa.states)
 
 
-@pytest.mark.parametrize(
-    "regex, expected, unexpected",
-    [
-        ("", [], [[Symbol("1")], [Symbol("0")]]),
-        (
-            "(1 0) | (1 1) | (0 1) | (0 1 0 1)*",
+def test_regex_to_dfa_accept():
+    regexes = ("", "(1 0) | (1 1) | (0 1) | (0 1 0 1)*", "a*")
+    expected = (
+        [],
+        [
+            [],
+            [Symbol("1"), Symbol("0")],
+            [Symbol("1"), Symbol("1")],
+            [Symbol("0"), Symbol("1")],
+            [Symbol("0"), Symbol("1"), Symbol("0"), Symbol("1")],
             [
-                [],
-                [Symbol("1"), Symbol("0")],
-                [Symbol("1"), Symbol("1")],
-                [Symbol("0"), Symbol("1")],
-                [Symbol("0"), Symbol("1"), Symbol("0"), Symbol("1")],
-                [
-                    Symbol("0"),
-                    Symbol("1"),
-                    Symbol("0"),
-                    Symbol("1"),
-                    Symbol("0"),
-                    Symbol("1"),
-                    Symbol("0"),
-                    Symbol("1"),
-                ],
+                Symbol("0"),
+                Symbol("1"),
+                Symbol("0"),
+                Symbol("1"),
+                Symbol("0"),
+                Symbol("1"),
+                Symbol("0"),
+                Symbol("1"),
             ],
-            [[Symbol("1")], [Symbol("0")], [Symbol("1"), Symbol("0"), Symbol("1")]],
-        ),
-        (
-            "a*",
-            [[], [Symbol("a")], [Symbol("a"), Symbol("a")]],
-            [[Symbol("b")], [Symbol("c"), Symbol("d"), Symbol("e")], [Symbol("a*")]],
-        ),
-    ],
-)
-def test_regex_to_dfa_accept(
-    regex: str,
-    expected: List[Iterable[Symbol]],
-    unexpected: List[Iterable[Symbol]],
-):
-    dfa = regex_to_min_dfa(regex)
-    for expected_word in expected:
-        assert dfa.accepts(expected_word)
-    for unexpected_word in unexpected:
-        assert not dfa.accepts(unexpected_word)
+        ],
+        [[], [Symbol("a")], [Symbol("a"), Symbol("a")]],
+    )
+
+    for regex, expected_list in zip(regexes, expected):
+        dfa = regex_to_min_dfa(regex)
+        for expected_word in expected_list:
+            assert dfa.accepts(expected_word)
 
 
 def test_exception():
