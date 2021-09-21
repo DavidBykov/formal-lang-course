@@ -1,7 +1,11 @@
 import pytest
 import cfpq_data
 import networkx
-from project.graph_utils import get_graph_description, write_two_cycles_graph
+from project.graph_utils import (
+    get_graph_description,
+    write_two_cycles_graph,
+    generate_two_cycles_graph,
+)
 
 
 def test_get_graph_utils():
@@ -26,7 +30,7 @@ def test_write_two_cycles_graph(tmpdir):
     edge_labels = ("edge_label_one", "edge_label_two")
 
     file = tmpdir.mkdir("test_dir").join("example.dot")
-    write_two_cycles_graph(n, m, edge_labels, file)
+    write_two_cycles_graph(generate_two_cycles_graph(n, m, edge_labels), file)
 
     expected_graph = cfpq_data.labeled_two_cycles_graph(
         n, m, edge_labels=edge_labels, verbose=False
